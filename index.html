@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Moto ❤️</title>
+    <style>
+        /* --- 1. FONTS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@300;600&display=swap');
+
+        /* --- 2. PREMIUM BACKGROUND --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #2e0b1f, #4a001f, #0f0c29);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- GLOWING ORBS --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: floatOrb 10s infinite alternate;
+            z-index: 0;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #ff0055; top: -50px; left: -50px; }
+        .orb-2 { width: 400px; height: 400px; background: #7b2cbf; bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            from { transform: translate(0, 0); }
+            to { transform: translate(30px, 50px); }
+        }
+
+        /* --- 3. THE CARD STACK --- */
+        .stack-container {
+            position: relative;
+            width: 340px;
+            height: 520px;
+            z-index: 10;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1); /* Glassmorphism */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+            box-sizing: border-box;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s;
+            cursor: pointer;
+            user-select: none;
+            transform-style: preserve-3d;
+        }
+
+        /* Stack Layers */
+        .c1 { z-index: 8; transform: rotate(0deg); }
+        .c2 { z-index: 7; transform: rotate(-3deg); }
+        .c3 { z-index: 6; transform: rotate(3deg); }
+        .c4 { z-index: 5; transform: rotate(-2deg); }
+        .c5 { z-index: 4; transform: rotate(2deg); }
+        .c6 { z-index: 3; transform: rotate(-4deg); background: rgba(0, 0, 0, 0.8); border: 2px solid red; } /* Warning */
+        .c7 { z-index: 2; transform: rotate(3deg); }
+        .c8 { z-index: 1; transform: rotate(0deg); background: rgba(0, 0, 0, 0.6); border: 2px solid gold; }
+
+        /* --- TEXT STYLES --- */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+        }
+        
+        h2 { font-size: 2rem; color: #fff; margin: 10px 0; font-family: 'Pacifico', cursive; }
+        p { color: #eee; font-size: 1.1rem; line-height: 1.6; margin-top: 10px; }
+
+        .emoji-lg {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        .highlight { color: #ff0055; font-weight: bold; background: white; padding: 2px 5px; border-radius: 4px; }
+        .tap-hint { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; animation: pulse 1s infinite; }
+
+        /* Warning Text */
+        .warning-text { font-family: 'Courier New', monospace; color: red; font-size: 1.5rem; font-weight: bold; background: black; padding: 5px; }
+
+        /* --- ANIMATIONS --- */
+        .fly-left { transform: translate(-120%, -20%) rotate(-45deg) !important; opacity: 0; }
+        .fly-right { transform: translate(120%, -20%) rotate(45deg) !important; opacity: 0; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- DYNAMIC ELEMENTS (Moto Text & Flowers) --- */
+        .floating-moto {
+            position: absolute;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff0055;
+            text-shadow: 0 0 10px white;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatUpFade 2s ease-out forwards;
+            white-space: nowrap;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 999;
+            animation: floatUpFade 2.5s ease-out forwards;
+        }
+
+        @keyframes floatUpFade {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-150px) scale(1); opacity: 0; }
+        }
+
+        /* --- BUTTON STYLE --- */
+        .celebrate-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(45deg, #ff0055, #ffcc00);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            transition: transform 0.1s;
+        }
+        .celebrate-btn:active { transform: scale(0.95); }
+
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="stack-container">
+        
+        <div class="card c1" onclick="nextCard(this)">
+            <div class="emoji-lg">💌</div>
+            <h1>Hey Muskan!</h1>
+            <p>I made this with my whole heart for you.</p>
+            <div class="tap-hint">Tap to Open</div>
+        </div>
+
+        <div class="card c2" onclick="nextCard(this)">
+            <p style="letter-spacing: 3px; text-transform: uppercase;">THE SPECIAL DAY</p>
+            <h1 style="font-size: 4.5rem;">15 FEB</h1>
+            <h2>2005</h2>
+            <p>A Queen was born. 👑</p>
+        </div>
+
+        <div class="card c3" onclick="nextCard(this)">
+            <div class="emoji-lg">❤️</div>
+            <p>You have won my heart completely.</p>
+            <p>"Main tumse pyaar karta hu aur hamesha karta rahunga."</p>
+            <p class="highlight">Never leave me.</p>
+        </div>
+
+        <div class="card c4" onclick="nextCard(this)">
+            <h1>Meri Dua 🤲</h1>
+            <p>"Allah tumhe wo sari khushiyan de jo tum deserve karti ho."</p>
+            <p>Hamesha hasti rehna meri jaan.</p>
+        </div>
+
+        <div class="card c6" onclick="nextCard(this)">
+            <div class="emoji-lg">⚠️</div>
+            <div class="warning-text">ALERT!</div>
+            <p style="color:red; font-weight:bold;">Scanning Age...</p>
+            <h2 style="color: #ff3333;">BUDHIYA DETECTED! 👵</h2>
+            <div class="tap-hint">(Tap fast to fix!)</div>
+        </div>
+
+        <div class="card c7" onclick="nextCard(this)">
+            <div class="emoji-lg">😂</div>
+            <h1>Just Kidding!</h1>
+            <p>You still look 16 to me.</p>
+            <p>(Sorry, mazaak tha! 🙈)</p>
+        </div>
+
+        <div class="card c8">
+            <div class="emoji-lg">🎂</div>
+            <h1 style="color: gold;">Happy Birthday!</h1>
+            <p>Make a wish, my love!</p>
+            
+            <button class="celebrate-btn" onclick="celebrateFullPower()">
+                CLICK ME REPEATEDLY! 🥳
+            </button>
+            <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">(Tap button many times!)</p>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        let clickCount = 0;
+
+        function nextCard(card) {
+            clickCount++;
+            if (clickCount % 2 === 0) {
+                card.classList.add('fly-right');
+            } else {
+                card.classList.add('fly-left');
+            }
+        }
+
+        // --- THE MOTO CELEBRATION LOGIC ---
+        function celebrateFullPower() {
+            // 1. Confetti Blast from center
+            confetti({
+                particleCount: 50,
+                spread: 100,
+                origin: { y: 0.7 },
+                colors: ['#ff0055', '#ffdd00', '#ffffff']
+            });
+
+            // 2. Play Sound (Optional - can add Audio object here)
+
+            // 3. Show "Happy Birthday Moto" Text
+            spawnMotoText();
+
+            // 4. Show Floating Flowers/Emojis
+            spawnEmojis();
+        }
+
+        function spawnMotoText() {
+            const text = document.createElement('div');
+            text.classList.add('floating-moto');
+            text.innerHTML = "Happy Birthday Moto ❤️";
+            
+            // Random Position
+            const randomX = Math.random() * 80 + 10; // 10% to 90%
+            const randomY = Math.random() * 50 + 20;
+            
+            text.style.left = randomX + '%';
+            text.style.top = randomY + '%';
+            
+            // Random Color
+            const colors = ['#ff0055', '#ffcc00', '#00e5ff', '#ff33aa'];
+            text.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+            document.body.appendChild(text);
+
+            // Remove after animation
+            setTimeout(() => { text.remove(); }, 2000);
+        }
+
+        function spawnEmojis() {
+            const emojis = ['🌹', '🌸', '✨', '💖', '🍫', '🦋'];
+            
+            // Spawn 3 emojis per click
+            for(let i=0; i<3; i++) {
+                const el = document.createElement('div');
+                el.classList.add('floating-emoji');
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+
+                el.style.left = randomX + 'vw';
+                el.style.top = (randomY + 20) + 'vh'; // start slightly lower
+
+                document.body.appendChild(el);
+                setTimeout(() => { el.remove(); }, 2500);
+            }
+        }
+    </script>
+</body>
+</html>
